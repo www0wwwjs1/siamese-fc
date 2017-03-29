@@ -5,7 +5,7 @@ function per_frame_annotation(root, folder_index)
 % e.g. per_frame_annotations('/path/to/ILSVRC2015/', 0)
 % --------------------------------------------------------------------------
 
-    addpath(genpath('../..'));
+%     addpath(genpath('../..'));
     i = folder_index + 3;
 
     CLASS_IDS = {'n02691156','n02419796','n02131653','n02834778','n01503061','n02924116','n02958343','n02402425','n02084071','n02121808', ...

@@ -7,6 +7,7 @@ function [newTargetPosition, bestScale] = tracker_eval(net_x, s_x, scoreId, z_fe
 %   Luca Bertinetto, Jack Valmadre, Joao F. Henriques, 2016
 % -------------------------------------------------------------------------------------------------------------------------
     % forward pass, using the pyramid of scaled crops as a "batch"
+    net_x.conserveMemory = 0;
     net_x.eval({p.id_feat_z, z_features, 'instance', x_crops});
     responseMaps = reshape(net_x.vars(scoreId).value, [p.scoreSize p.scoreSize p.numScale]);
     responseMapsUP = gpuArray(single(zeros(p.scoreSize*p.responseUp, p.scoreSize*p.responseUp, p.numScale)));

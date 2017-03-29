@@ -104,10 +104,12 @@ function bboxes = tracker(varargin)
     window = window / sum(window(:));
     scales = (p.scaleStep .^ ((ceil(p.numScale/2)-p.numScale) : floor(p.numScale/2)));
     % evaluate the offline-trained network for exemplar z features
+    net_z.conserveMemory = 0;
     net_z.eval({'exemplar', z_crop});
     z_features = net_z.vars(zFeatId).value;
     z_features = repmat(z_features, [1 1 1 p.numScale]);
 
+    res_path = [p.seq_base_path p.video '/res/'];
     bboxes = zeros(nImgs, 4);
     % start tracking
     tic;
@@ -149,6 +151,8 @@ function bboxes = tracker(varargin)
                 im = gather(im)/255;
                 im = insertShape(im, 'Rectangle', rectPosition, 'LineWidth', 4, 'Color', 'yellow');
                 % Display the annotated video frame using the video player object.
+                imgName = [res_path sprintf('%08d.jpg', i)];
+                imwrite(im, imgName);
                 step(videoPlayer, im);
             end
         end
